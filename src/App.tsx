@@ -1,9 +1,18 @@
-import React from 'react';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-const App: React.FC = () => {
+import PeoplePage from './pages/people-page';
+import PersonPage from './pages/person-page';
+
+const App = () => {
   return (
-    <div>App</div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<PeoplePage />} />
+        <Route path='/:id' element={<PersonPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
