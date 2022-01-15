@@ -2,8 +2,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_PEOPLE_QUERY = gql`
-  query GetPeopleQuery {
-    getPeople {
+  query GetPeopleQuery($page: String) {
+    getPeople(page: $page) {
       data {
         name
         height
@@ -20,6 +20,11 @@ export const GET_PEOPLE_QUERY = gql`
           surface_water
           population
         }
+      }
+      page {
+        totalPeople
+        nextPage
+        previousPage
       }
     }
   }

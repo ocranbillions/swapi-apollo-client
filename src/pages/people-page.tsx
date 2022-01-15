@@ -1,21 +1,25 @@
-import React from 'react'
+import React from 'react';
 import { useQuery } from '@apollo/client';
 
 import Layout from '../components/layout';
-import PersonCard from '../components/person-card';
+import PeopleList from '../components/people-list';
 import QueryResultRenderer from '../components/query-result-renderer';
 
+import useQueryParams from '../hooks/use-query-params';
 import { GET_PEOPLE_QUERY } from '../graphql';
 
 const PeoplePage = () => {
-  const { loading, error, data } = useQuery(GET_PEOPLE_QUERY);
+  const query = useQueryParams();
+  const pageNumber = query.get('page');
+
+  const { loading, error, data } = useQuery(GET_PEOPLE_QUERY, {
+    variables: { page: pageNumber }
+  });
 
   return (
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
-        {data?.getPeople?.data.map((person: any) => (
-          <PersonCard key={person.name} person={person} />
-        ))}
+        <PeopleList people={data?.getPeople.data} pageInfo={{...data?.getPeople.page, pageNumber}} />
       </QueryResultRenderer>
     </Layout>
   );
