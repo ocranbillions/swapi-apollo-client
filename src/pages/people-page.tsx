@@ -8,9 +8,7 @@ import QueryResultRenderer from '../components/query-result-renderer';
 import { GET_PEOPLE_QUERY } from '../graphql';
 
 const PeoplePage = () => {
-  const { loading, error, data } = useQuery(GET_PEOPLE_QUERY, {
-    variables: { searchTerm: '' }
-  });
+  const { loading, error, data } = useQuery(GET_PEOPLE_QUERY);
 
   return (
     <Layout>

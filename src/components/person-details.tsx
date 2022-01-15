@@ -2,7 +2,7 @@ import React from 'react';
 
 const PersonDetails = (props: any) => {
   const { data } = props;
-  const [person] = data.getPeople.data
+  const person = data.getPerson;
 
   return (
     <div>
