@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'react-jss';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorPage from './pages/error-page';
 
 import './index.css';
 import App from './App';
+import ErrorPage from './pages/error-page';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
