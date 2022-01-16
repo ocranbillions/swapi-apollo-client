@@ -1,10 +1,10 @@
 import React from 'react';
 
 import PersonCard from './person-card';
+import { PersonI } from '../@types';
 
-const PersonDetails = (props: any) => {
-  const { data, isPersonPage } = props;
-  const person = data.getPerson;
+const PersonDetails = (props: { person: PersonI; isPersonPage: boolean }) => {
+  const { person, isPersonPage } = props;
 
   return <PersonCard person={person} isPersonPage={isPersonPage}/>;
 }

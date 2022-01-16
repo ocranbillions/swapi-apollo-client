@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
-import { CustomThemeI } from '../@types';
+import { CustomThemeI, PaginationI } from '../@types';
 
 // Helper method to return page number e.g (page=1)
 const getParamsFromLink = (url = '') => url?.split('?')[1]
@@ -32,7 +32,8 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
   },
 }));
 
-const Pagination = (props: any) => {
+
+const Pagination = (props: PaginationI) => {
   const s = useStyles();
 
   const { pageInfo } = props;

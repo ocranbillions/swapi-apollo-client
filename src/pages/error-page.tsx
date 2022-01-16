@@ -13,7 +13,7 @@ const useStyles = createUseStyles(() => ({
   },
 }));
 
-const ErrorPage = (props: any) => {
+const ErrorPage = (props: { error: Error }) => {
   const s = useStyles();
   const { error } = props;
 

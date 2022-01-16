@@ -1,6 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
+import { PeopleListPropsI, PersonI } from '../@types';
 import Pagination from './pagination'
 import PersonCard from './person-card';
 
@@ -19,17 +20,17 @@ const useStyles = createUseStyles(() => ({
   }
 }));
 
-const PeopleList = (props: any) => {
-  const s = useStyles();
 
+const PeopleList = (props: PeopleListPropsI) => {
+  const s = useStyles();
   const { people, pageInfo } = props;
 
   return (
     <div>
       <Pagination pageInfo={pageInfo}/>
       <div className={s.listContainer}>
-        {people.map((person: any) => (
-          <PersonCard key={person.name} person={person} />
+        {people.map((person: PersonI) => (
+          <PersonCard key={person.name} person={person} isPersonPage={false} />
         ))}
       </div>
     </div>

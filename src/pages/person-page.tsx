@@ -20,7 +20,7 @@ const PersonPage = () => {
   return (
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
-        <PersonDetails data={data} isPersonPage/>
+        <PersonDetails person={data?.getPerson} isPersonPage/>
       </QueryResultRenderer>
     </Layout>
   )

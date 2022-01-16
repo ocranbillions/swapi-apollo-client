@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
 
-import { CustomThemeI } from '../@types';
+import { CustomThemeI, PersonI } from '../@types';
 
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
   card: {
@@ -61,7 +61,7 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
 }));
 
 
-const PersonCard = (props: any) => {
+const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
   const s = useStyles();
   const { person, isPersonPage } = props;
   const { homeworld } = person;
