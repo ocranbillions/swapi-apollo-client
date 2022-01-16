@@ -4,6 +4,10 @@ export interface CustomThemeI {
   colors: {
     black: string
     white: string
+    yellow: string
+    darkBlack: string
+    textColor: string
+    lightBlack: string
   }
 }
 

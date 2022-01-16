@@ -16,7 +16,12 @@ const client = new ApolloClient({
 const theme = {
   colors: {
     white: '#FFF',
-    black: '#000'
+    black: '#333',
+    darkBlack: '#1c1e22',
+    lightBlack: '#3a3f44',
+    yellow: '#FFE300',
+    textColor: '#c8c8c8',
+    blue: '#428bca'
   },
 };
 
