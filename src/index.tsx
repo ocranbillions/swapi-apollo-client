@@ -8,11 +8,8 @@ import './index.css';
 import App from './App';
 import ErrorPage from './pages/error-page';
 
-console.log(process.env.API_URL, 'API')
-
 const client = new ApolloClient({
-  uri: process.env.API_URL,
-  // uri: 'https://swapi-apollo-server.herokuapp.com/graphql',
+  uri: 'https://swapi-apollo-server.herokuapp.com/graphql',
   cache: new InMemoryCache(),
 });
 
