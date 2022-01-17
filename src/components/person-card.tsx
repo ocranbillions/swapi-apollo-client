@@ -8,6 +8,8 @@ import { CustomThemeI, PersonI } from '../@types';
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
   card: {
     background: theme.colors.darkBlack,
+    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+    borderRadius: 10,
     display: 'flex',
     flexDirection: 'column',
     textDecoration: 'none',
@@ -23,9 +25,9 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
     pointerEvents: 'none'
   },
   cardTitle: {
-    fontSize: 28,
+    fontSize: 24,
     marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   row: {
     display: 'flex',
@@ -39,21 +41,21 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
   divider: {
     width: '100%',
     marginTop: 20,
-    marginBottom: 10,
+    marginBottom: 0,
   },
   homeworldTitle: {
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 16,
+    color: theme.colors.grey
   },
   homeworldDetails: {
     display: 'flex',
+    fontSize: 13,
+    '& *': {
+      color: theme.colors.grey
+    }
   },
-  leftColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-  },
-  rightColumn: {
+  column: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
@@ -89,7 +91,7 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
           Homewrld: {homeworld.name}
         </h3>
         <div className={s.homeworldDetails}>
-          <div className={s.leftColumn}>
+          <div className={s.column}>
             <span>rotation_period</span>
             <span>orbital_period</span>
             <span>diameter</span>
@@ -99,7 +101,7 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
             <span>surface_water</span>
             <span>population</span>
           </div>
-          <div className={s.rightColumn}>
+          <div className={s.column}>
             <span>{homeworld.rotation_period}</span>
             <span>{homeworld.orbital_period}</span>
             <span>{homeworld.diameter}</span>

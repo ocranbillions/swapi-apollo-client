@@ -21,7 +21,7 @@ const theme = {
     lightBlack: '#3a3f44',
     yellow: '#FFE300',
     textColor: '#c8c8c8',
-    blue: '#428bca'
+    grey: 'grey'
   },
 };
 

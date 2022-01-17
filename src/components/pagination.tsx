@@ -12,16 +12,18 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '50px 0px'
+    margin: '20px 0px'
   },
   pageCount: {
-    margin: '0px 20px'
+    margin: '0px 20px',
+    fontSize: 12,
   },
   btn: {
     background: theme.colors.lightBlack,
-    padding: '10px 20px',
+    padding: '5px 20px',
     borderRadius: 5,
     textDecoration: 'none',
+    fontSize: 12,
     '&:hover': {
       background: theme.colors.darkBlack,
     }

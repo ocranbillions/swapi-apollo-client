@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss';
+import { Link } from "react-router-dom";
 
 import { CustomThemeI } from '../@types';
 
@@ -22,24 +23,28 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
     }
   },
   content: {
-    width: 768,
+    width: 960,
     padding: '0px 20px',
+    marginTop: 10,
   },
   header: {
     textAlign: 'center',
+    textDecoration: 'none',
     '& *': {
       color: theme.colors.yellow,
     }
   },
   title: {
-    fontSize: 48,
+    marginTop: 5,
+    fontSize: 38,
     marginBottom: 0,
   },
   subTitle: {
-    fontSize: 24,
+    fontSize: 20,
     marginTop: 0,
+    marginBottom: 10,
   },
-  '@media only screen and (max-width: 768px)': {
+  '@media only screen and (max-width: 960px)': {
     content: {
       width: '100%'
     }
@@ -52,10 +57,10 @@ const Layout = (props: { children: React.ReactChild }) => {
   return (
     <div className={s.pageLayout}>
       <div className={s.content}>
-        <div className={s.header}>
+        <Link to='/' className={s.header}>
           <h2 className={s.title}>SWAPI</h2>
-          <h4 className={s.subTitle}>The Starwars Players</h4>
-        </div>
+          <h4 className={s.subTitle}>The Starwars Characters</h4>
+        </Link>
         {props.children}
       </div>
     </div>

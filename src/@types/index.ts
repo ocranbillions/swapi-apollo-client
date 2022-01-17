@@ -28,6 +28,7 @@ export interface CustomThemeI {
     darkBlack: string
     textColor: string
     lightBlack: string
+    grey: string
   }
 }
 
