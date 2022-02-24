@@ -99,10 +99,15 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
     });
   }
 
+  const handleDelete = (e: any) => {
+    e.preventDefault();
+    deletePerson();
+  }
+
   return (
     <Link to={`/person?name=${person.name}`} className={clsx(s.card, isPersonPage && s.disableClick)}>
       <h4 className={s.cardTitle}>{person.name}</h4>
-      <button className={s.deleteBtn} onClick={deletePerson}>Delete</button>
+      <button className={s.deleteBtn} onClick={handleDelete}>Delete</button>
       <section>
         <div className={s.row}>
           <span>Height</span>

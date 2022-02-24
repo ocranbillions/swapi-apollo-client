@@ -100,11 +100,11 @@ const Form = (props: any) => {
         </div>
         <div className={s.row}>
           <label className={s.label}>Height</label>
-          <input className={s.input} type="number" name="height" ref={node => height = node as HTMLInputElement}/>
+          <input className={s.input} type="number" min="1" name="height" ref={node => height = node as HTMLInputElement}/>
         </div>
         <div className={s.row}>
           <label className={s.label}>Mass</label>
-          <input className={s.input} type="number" name="mass" ref={node => mass = node as HTMLInputElement}/>
+          <input className={s.input} type="number" min="1" name="mass" ref={node => mass = node as HTMLInputElement}/>
         </div>
         <div className={s.row}>
           <label className={s.label}>Gender</label>
