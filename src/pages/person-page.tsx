@@ -6,10 +6,11 @@ import Layout from '../components/layout';
 import PersonDetails from '../components/person-details';
 import Modal from '../components/modal';
 import QueryResultRenderer from '../components/query-result-renderer';
+import Button from '../components/button';
 
 import { GET_PERSON_QUERY, UPDATE_PERSON_MUTATION } from '../graphql';
 import useQueryParams from '../hooks/use-query-params';
-import Button from '../components/button';
+import client from '../apollo/client'
 
 const PersonPage = () => {
   const query = useQueryParams();
@@ -33,7 +34,12 @@ const PersonPage = () => {
         variables: { name: values.name }
       }],
     });
+  }
 
+  const handlePersonUpdate = async (values: any) => {
+    await updatePerson(values)
+
+    client.cache.reset()
     navigate(`/person?name=${values.name}`)
   }
 
@@ -42,7 +48,7 @@ const PersonPage = () => {
       <QueryResultRenderer error={error} loading={loading} data={data}>
         <div>
           <Button onClick={() => setShow(true)} btnText="Edit Details"/>
-          <Modal title="Edit Details" onClose={() => setShow(false)} show={show} person={data?.getPerson} updatePerson={updatePerson}/>
+          <Modal title="Edit Details" onClose={() => setShow(false)} show={show} person={data?.getPerson} updatePerson={handlePersonUpdate}/>
           <PersonDetails person={data?.getPerson} isPersonPage/>
         </div>
       </QueryResultRenderer>

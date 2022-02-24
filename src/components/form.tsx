@@ -117,7 +117,7 @@ const Form = (props: any) => {
         <div className={s.row}>
           <label className={s.label}>Homeworld</label>
           <select className={s.input} id="homeworld" name="homeworld" ref={node => homeworld = node as HTMLSelectElement}>
-            {data?.getAllHomeworlds.map((homeworld: any) => <option value={homeworld.id}>{homeworld.name}</option>)}
+            {data?.getAllHomeworlds.map((homeworld: any) => <option key={homeworld.id} value={homeworld.id}>{homeworld.name}</option>)}
           </select>
         </div>
         <div className={s.errorText}>{errorMessage && <small>{errorMessage}</small>}</div>

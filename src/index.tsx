@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'react-jss';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import './index.css';
 import App from './App';
 import ErrorPage from './pages/error-page';
-
-const client = new ApolloClient({
-  uri: 'https://swapi-apollo-server.herokuapp.com/graphql',
-  cache: new InMemoryCache(),
-});
+import client from './apollo/client';
 
 const theme = {
   colors: {

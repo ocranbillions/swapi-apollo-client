@@ -10,6 +10,7 @@ import QueryResultRenderer from '../components/query-result-renderer';
 
 import useQueryParams from '../hooks/use-query-params';
 import { GET_PEOPLE_QUERY, CREATE_PERSON_MUTATION } from '../graphql';
+import client from '../apollo/client'
 
 const PeoplePage = () => {
   const query = useQueryParams();
@@ -38,6 +39,7 @@ const PeoplePage = () => {
       }],
     });
 
+    client.cache.reset()
     navigate(`/?page=${lastPageNumber}`)
   }
   

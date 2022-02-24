@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { CustomThemeI, PersonI } from '../@types';
 import { DELETE_PERSON_MUTATION, GET_PEOPLE_QUERY } from '../graphql';
 import useQueryParams from '../hooks/use-query-params';
+import client from '../apollo/client';
 
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
   card: {
@@ -103,13 +104,14 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
         fetchPolicy: 'no-cache'
       }],
     });
-    
-    isPersonPage && navigate('/')
   }
 
-  const handleDelete = (e: any) => {
+  const handleDelete = async (e: any) => {
     e.preventDefault();
-    deletePerson();
+    await deletePerson();
+
+    client.cache.reset()
+    isPersonPage && navigate('/')
   }
 
   return (
