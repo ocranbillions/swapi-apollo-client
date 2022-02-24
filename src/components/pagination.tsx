@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import { CustomThemeI, PaginationI } from '../@types';
 
-// Helper method to return page number e.g (page=1)
-const getParamsFromLink = (url = '') => url?.split('?')[1]
-
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
   container: {
     display: 'flex',
@@ -47,8 +44,8 @@ const Pagination = (props: PaginationI) => {
 
   return (
     <div className={s.container}>
-      <Link 
-        to={`/?${getParamsFromLink(previousPage)}`} 
+      <Link
+        to={`/?page=${previousPage}`} 
         className={clsx(s.btn, !previousPage && s.disabled)}
       >
         Prev
@@ -57,7 +54,7 @@ const Pagination = (props: PaginationI) => {
         {`Page ${currentPageNumber} of ${totalNumOfPages}`}
       </h3>
       <Link 
-        to={`/?${getParamsFromLink(nextPage)}`} 
+        to={`/?page=${nextPage}`}
         className={clsx(s.btn, !nextPage && s.disabled)}
       >
         Next
