@@ -1,6 +1,7 @@
 import { ReactChild } from 'react';
 
 export interface HomeworldI {
+  id: string
   name: string
   rotation_period: string
   orbital_period: string

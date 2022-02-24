@@ -10,6 +10,7 @@ export const GET_PEOPLE_QUERY = gql`
         mass
         gender
         homeworld {
+          id
           name
           rotation_period
           orbital_period
@@ -38,6 +39,7 @@ export const GET_PERSON_QUERY = gql`
       mass
       gender
       homeworld {
+        id
         name
         rotation_period
         orbital_period
@@ -60,6 +62,7 @@ mutation createPerson($personData: CreatePersonInput!) {
     mass
     gender
     homeworld {
+      id
       name
       rotation_period
       orbital_period
@@ -82,6 +85,7 @@ mutation UpdatePerson($name: String, $personData: CreatePersonInput!) {
     mass
     gender
     homeworld {
+      id
       name
       rotation_period
       orbital_period
@@ -94,4 +98,38 @@ mutation UpdatePerson($name: String, $personData: CreatePersonInput!) {
     }
   }
 }
+`;
+
+export const GET_ALLHOMEWORLDS_QUERY = gql`
+  query GetAllHomeworlds {
+    getAllHomeworlds {
+      id
+      name
+      rotation_period
+      orbital_period
+      diameter
+      climate
+      gravity
+      terrain
+      surface_water
+      population
+    }
+  }
+`;
+
+export const GET_HOMEWORLD_QUERY = gql`
+  query getHomeworld($getHomeworldId: Int) {
+    getHomeworld(id: $getHomeworldId) {
+      id
+      name
+      rotation_period
+      orbital_period
+      diameter
+      climate
+      gravity
+      terrain
+      surface_water
+      population
+    }
+  }
 `;
