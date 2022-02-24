@@ -133,3 +133,9 @@ export const GET_HOMEWORLD_QUERY = gql`
     }
   }
 `;
+
+export const DELETE_PERSON_MUTATION = gql`
+  mutation Mutation($name: String) {
+    deletePerson(name: $name)
+  }
+`;

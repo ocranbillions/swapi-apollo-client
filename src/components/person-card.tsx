@@ -1,12 +1,16 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Link } from "react-router-dom";
+import { useMutation } from '@apollo/client';
+
 import clsx from 'clsx';
 
 import { CustomThemeI, PersonI } from '../@types';
+import { DELETE_PERSON_MUTATION, GET_PEOPLE_QUERY } from '../graphql';
 
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
   card: {
+    position: 'relative',
     background: theme.colors.darkBlack,
     boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
     borderRadius: 10,
@@ -59,6 +63,21 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
+  },
+  deleteBtn: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    fontSize: 8,
+    background: theme.colors.grey,
+    color: theme.colors.textColor,
+    border: 'none',
+    borderRadius: 5,
+    pointerEvents: 'auto',
+    '&:hover': {
+      cursor: 'pointer',
+      background: theme.colors.darkBlack
+    }
   }
 }));
 
@@ -68,9 +87,22 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
   const { person, isPersonPage } = props;
   const { homeworld } = person;
 
+  const [deletePersonMutation] = useMutation(DELETE_PERSON_MUTATION);
+  
+  const deletePerson = async() => {
+    await deletePersonMutation({ variables: { 
+      name: person.name },
+      refetchQueries: () => [{
+        query: GET_PEOPLE_QUERY,
+        variables: { page: "1" }
+      }],
+    });
+  }
+
   return (
     <Link to={`/person?name=${person.name}`} className={clsx(s.card, isPersonPage && s.disableClick)}>
       <h4 className={s.cardTitle}>{person.name}</h4>
+      <button className={s.deleteBtn} onClick={deletePerson}>Delete</button>
       <section>
         <div className={s.row}>
           <span>Height</span>
