@@ -51,3 +51,25 @@ export const GET_PERSON_QUERY = gql`
     }
   }
 `;
+
+export const CREATE_PERSON_MUTATION = gql`
+mutation createPerson($personData: CreatePersonInput!) {
+  createPerson(personData: $personData) {
+    name
+    height
+    mass
+    gender
+    homeworld {
+      name
+      rotation_period
+      orbital_period
+      diameter
+      climate
+      gravity
+      terrain
+      surface_water
+      population
+    }
+  }
+}
+`;
