@@ -1,12 +1,37 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery  } from '@apollo/client';
 import { createUseStyles } from 'react-jss';
 
-import { GET_HOMEWORLD_QUERY, GET_ALLHOMEWORLDS_QUERY } from '../graphql';
+import { GET_ALLHOMEWORLDS_QUERY } from '../graphql';
 import QueryResultRenderer from './query-result-renderer';
 
 const useStyles = createUseStyles(() => ({
-  form: {
+  row: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    marginBottom: 15,
+    height: 30,
+    alignItems: 'center'
+  },
+  label: {
+    flex: 1,
+  },
+  input: {
+    flex: 1,
+    height: '100%',
+  },
+  errorText: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    height: 20,
+    color: 'red'
+  },
+  submitBtn: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    '& input[type="submit"]': {
+      width: 100,
+    }
   }
 }));
 
@@ -61,7 +86,6 @@ const Form = (props: any) => {
       )
       
       props.closeModal();
-      
     } catch(err: any) {
       setErrorMessage(err.message)
     }
@@ -69,35 +93,37 @@ const Form = (props: any) => {
 
   return (
     <QueryResultRenderer error={error} loading={loading} data={data}>
-      <form className={s.form} onSubmit={e => submitHandler(e)}>
-        <div>
-          <label>Name</label>
-          <input type="text" name="name" ref={node => name = node as HTMLInputElement} /><br/>
+      <form onSubmit={e => submitHandler(e)}>
+        <div className={s.row}>
+          <label className={s.label}>Name</label>
+          <input className={s.input} type="text" name="name" ref={node => name = node as HTMLInputElement}/><br/>
         </div>
-        <div>
-          <label>Height</label>
-          <input type="number" name="height" ref={node => height = node as HTMLInputElement}/>
+        <div className={s.row}>
+          <label className={s.label}>Height</label>
+          <input className={s.input} type="number" name="height" ref={node => height = node as HTMLInputElement}/>
         </div>
-        <div>
-          <label>Mass</label>
-          <input type="number" name="mass" ref={node => mass = node as HTMLInputElement}/>
+        <div className={s.row}>
+          <label className={s.label}>Mass</label>
+          <input className={s.input} type="number" name="mass" ref={node => mass = node as HTMLInputElement}/>
         </div>
-        <div>
-          <label>Gender</label>
-          <select id="gender" name="gender" ref={node => gender = node as HTMLSelectElement}>
+        <div className={s.row}>
+          <label className={s.label}>Gender</label>
+          <select className={s.input} id="gender" name="gender" ref={node => gender = node as HTMLSelectElement}>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="alien">Alien</option>
           </select>
         </div>
-        <div>
-          <label>Homeworld</label>
-          <select id="homeworld" name="homeworld" ref={node => homeworld = node as HTMLSelectElement}>
+        <div className={s.row}>
+          <label className={s.label}>Homeworld</label>
+          <select className={s.input} id="homeworld" name="homeworld" ref={node => homeworld = node as HTMLSelectElement}>
             {data?.getAllHomeworlds.map((homeworld: any) => <option value={homeworld.id}>{homeworld.name}</option>)}
           </select>
         </div>
-        <div>{errorMessage && <small>{errorMessage}</small>}</div>
-        <input type="submit" value="Submit" />
+        <div className={s.errorText}>{errorMessage && <small>{errorMessage}</small>}</div>
+        <div className={s.submitBtn}>
+          <input type="submit" value="Submit" />
+        </div>
       </form>
     </QueryResultRenderer>
   )

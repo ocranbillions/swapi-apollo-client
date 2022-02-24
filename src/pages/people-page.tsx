@@ -34,12 +34,12 @@ const PeoplePage = () => {
   return (
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
-        <div>
-        <button onClick={() => setShow(true)}>Show Modal</button>
-        <Modal title="Add new person" onClose={() => setShow(false)} show={show} createPerson={createPerson}/>
+        <>
+          <button onClick={() => setShow(true)}>Show Modal</button>
+          <Modal title="Add new person" onClose={() => setShow(false)} show={show} createPerson={createPerson}/>
 
-        <PeopleList people={data?.getPeople.data} pageInfo={{...data?.getPeople.page, pageNumber}} />
-        </div>
+          <PeopleList people={data?.getPeople.data} pageInfo={{...data?.getPeople.page, pageNumber}} />
+        </>
       </QueryResultRenderer>
     </Layout>
   );
