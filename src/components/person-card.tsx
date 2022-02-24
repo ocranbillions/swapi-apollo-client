@@ -35,7 +35,7 @@ const useStyles = createUseStyles((theme: CustomThemeI) => ({
       flex: 1,
     },
     '& span:nth-child(2)': {
-      flex: 4,
+      flex: 3,
     }
   },
   divider: {

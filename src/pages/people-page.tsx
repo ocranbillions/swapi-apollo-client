@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-
 import Layout from '../components/layout';
 import PeopleList from '../components/people-list';
 import Modal from '../components/modal';
+import Button from '../components/button';
 import QueryResultRenderer from '../components/query-result-renderer';
 
 import useQueryParams from '../hooks/use-query-params';
@@ -35,9 +35,8 @@ const PeoplePage = () => {
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
         <>
-          <button onClick={() => setShow(true)}>Show Modal</button>
+          <Button onClick={() => setShow(true)} btnText="Add Person"/>
           <Modal title="Add new person" onClose={() => setShow(false)} show={show} createPerson={createPerson}/>
-
           <PeopleList people={data?.getPeople.data} pageInfo={{...data?.getPeople.page, pageNumber}} />
         </>
       </QueryResultRenderer>

@@ -8,7 +8,7 @@ import QueryResultRenderer from '../components/query-result-renderer';
 
 import { GET_PERSON_QUERY, UPDATE_PERSON_MUTATION } from '../graphql';
 import useQueryParams from '../hooks/use-query-params';
-
+import Button from '../components/button';
 
 const PersonPage = () => {
   const query = useQueryParams();
@@ -37,9 +37,8 @@ const PersonPage = () => {
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
         <div>
-          <button onClick={() => setShow(true)}>Show Modal</button>
-          <Modal title="Update Person Details" onClose={() => setShow(false)} show={show} person={data?.getPerson} updatePerson={updatePerson}/>
-
+          <Button onClick={() => setShow(true)} btnText="Edit Details"/>
+          <Modal title="Edit Details" onClose={() => setShow(false)} show={show} person={data?.getPerson} updatePerson={updatePerson}/>
           <PersonDetails person={data?.getPerson} isPersonPage/>
         </div>
       </QueryResultRenderer>
