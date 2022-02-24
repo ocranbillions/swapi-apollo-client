@@ -55,7 +55,12 @@ const Modal = (props: any) => {
             <h4 className="modal-title">{props.title}</h4>
           </div>
           <div className="modal-body">
-            <Form closeModal={props.onClose}/>
+            <Form 
+              closeModal={props.onClose} 
+              person={props.person} 
+              createPerson={props.createPerson}
+              updatePerson={props.updatePerson}
+            />
           </div>
           <div className="modal-footer">
             <button onClick={props.onClose} className="button">

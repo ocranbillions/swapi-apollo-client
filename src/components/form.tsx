@@ -1,15 +1,8 @@
-import React, { useState, FormEvent } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { createUseStyles } from 'react-jss';
-
-import PersonCard from './person-card';
-import { PersonI } from '../@types';
-import { CREATE_PERSON_MUTATION, GET_PEOPLE_QUERY } from '../graphql';
-import useQueryParams from '../hooks/use-query-params';
 
 const useStyles = createUseStyles(() => ({
   form: {
-
   }
 }));
 
@@ -17,16 +10,24 @@ const Form = (props: any) => {
   const s = useStyles();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const query = useQueryParams();
-  const pageNumber = query.get('page');
-
   let name: HTMLInputElement;
   let height: HTMLInputElement;
   let mass: HTMLInputElement;
   let gender: HTMLInputElement;
   let homeworld: HTMLInputElement;
 
-  const [createPerson, { loading }] = useMutation(CREATE_PERSON_MUTATION);
+
+
+  useEffect(() => {
+    const { person } = props;
+    if(person) {
+      name.value = person.name
+      height.value = person.height
+      mass.value = person.mass
+      gender.value = person.gender
+      homeworld.value = "1"
+    }
+  }, [props.person])
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
@@ -37,23 +38,28 @@ const Form = (props: any) => {
     }
 
     try {
-      await createPerson({ variables: { 
-        personData: {
+      props.person ? (
+          await props.updatePerson({
           name: name.value,
           height: parseInt(height.value, 10),
           mass: parseInt(mass.value, 10),
           gender: gender.value,
           homeworldId: parseInt(homeworld.value, 10)
-      }},
-      refetchQueries: () => [{
-        query: GET_PEOPLE_QUERY,
-        variables: { page: pageNumber }
-      }],
-      });
+        })
+      ) : (
+        await props.createPerson({
+          name: name.value,
+          height: parseInt(height.value, 10),
+          mass: parseInt(mass.value, 10),
+          gender: gender.value,
+          homeworldId: parseInt(homeworld.value, 10)
+        })
+      )
+      
       props.closeModal();
       
     } catch(err: any) {
-        setErrorMessage(err.message)
+      setErrorMessage(err.message)
     }
   }
 
@@ -80,7 +86,7 @@ const Form = (props: any) => {
         <input type="number" name="homeworld" ref={node => homeworld = node as HTMLInputElement}/>
       </div>
       <div>{errorMessage && <small>{errorMessage}</small>}</div>
-      <input type="submit" value={loading ? "Submitting" : "Submit"}/>
+      <input type="submit" value="Submit" />
     </form>
   )
 }
