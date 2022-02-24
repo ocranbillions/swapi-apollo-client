@@ -73,3 +73,25 @@ mutation createPerson($personData: CreatePersonInput!) {
   }
 }
 `;
+
+export const UPDATE_PERSON_MUTATION = gql`
+mutation UpdatePerson($name: String, $personData: CreatePersonInput!) {
+  updatePerson(name: $name, personData: $personData) {
+    name
+    height
+    mass
+    gender
+    homeworld {
+      name
+      rotation_period
+      orbital_period
+      diameter
+      climate
+      gravity
+      terrain
+      surface_water
+      population
+    }
+  }
+}
+`;
