@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+
 import Layout from '../components/layout';
 import PeopleList from '../components/people-list';
 import Modal from '../components/modal';
@@ -19,16 +21,24 @@ const PeoplePage = () => {
     variables: { page: pageNumber }
   });
 
+  const navigate = useNavigate();
   const [createPersonMutation] = useMutation(CREATE_PERSON_MUTATION);
   
   const createPerson = async(values: any) => {
+    const { totalPeople } = data?.getPeople.page
+    const ITEMS_PER_PAGE = 10;
+    const lastPageNumber = Math.ceil(parseInt(totalPeople + 1) / ITEMS_PER_PAGE);
+
     await createPersonMutation({ variables: { 
       personData: { ...values }},
       refetchQueries: () => [{
         query: GET_PEOPLE_QUERY,
-        variables: { page: pageNumber }
+        variables: { page: lastPageNumber.toString() },
+        fetchPolicy: 'no-cache'
       }],
     });
+
+    navigate(`/?page=${lastPageNumber}`)
   }
   
   return (

@@ -2,11 +2,12 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { Link } from "react-router-dom";
 import { useMutation } from '@apollo/client';
-
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { CustomThemeI, PersonI } from '../@types';
 import { DELETE_PERSON_MUTATION, GET_PEOPLE_QUERY } from '../graphql';
+import useQueryParams from '../hooks/use-query-params';
 
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
   card: {
@@ -87,16 +88,23 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
   const { person, isPersonPage } = props;
   const { homeworld } = person;
 
+  const query = useQueryParams();
+  const pageNumber = query.get('page');
+
+  const navigate = useNavigate();
   const [deletePersonMutation] = useMutation(DELETE_PERSON_MUTATION);
-  
+
   const deletePerson = async() => {
     await deletePersonMutation({ variables: { 
       name: person.name },
       refetchQueries: () => [{
         query: GET_PEOPLE_QUERY,
-        variables: { page: "1" }
+        variables: { page: pageNumber },
+        fetchPolicy: 'no-cache'
       }],
     });
+    
+    isPersonPage && navigate('/')
   }
 
   const handleDelete = (e: any) => {
