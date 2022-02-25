@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://swapi-apollo-server.herokuapp.com/graphql',
+  uri: process.env.REACT_APP_API,
   cache: new InMemoryCache(),
 });
 
