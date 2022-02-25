@@ -8,7 +8,7 @@ import Modal from '../components/modal';
 import QueryResultRenderer from '../components/query-result-renderer';
 import Button from '../components/button';
 
-import { GET_PERSON_QUERY, UPDATE_PERSON_MUTATION } from '../graphql';
+import { GET_ALLHOMEWORLDS_QUERY, GET_PERSON_QUERY, UPDATE_PERSON_MUTATION } from '../graphql';
 import useQueryParams from '../hooks/use-query-params';
 import client from '../apollo/client'
 
@@ -22,6 +22,8 @@ const PersonPage = () => {
   const { loading, error, data } = useQuery(GET_PERSON_QUERY, {
     variables: { name: personName }
   });
+
+  const { data: homeworlds } = useQuery(GET_ALLHOMEWORLDS_QUERY);
 
   const [updatePersonMutation] = useMutation(UPDATE_PERSON_MUTATION);
   
@@ -43,8 +45,15 @@ const PersonPage = () => {
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
         <div>
-          <Button onClick={() => setShow(true)} btnText="Edit Details"/>
-          <Modal title="Edit Details" onClose={() => setShow(false)} show={show} person={data?.getPerson} updatePerson={handlePersonUpdate}/>
+          <Button onClick={() => setShow(true)} btnText="edit details"/>
+          <Modal 
+            title="Edit Details" 
+            onClose={() => setShow(false)} 
+            show={show} 
+            person={data?.getPerson} 
+            updatePerson={handlePersonUpdate} 
+            homeworlds={homeworlds}
+          />
           <PersonDetails person={data?.getPerson} isPersonPage/>
         </div>
       </QueryResultRenderer>

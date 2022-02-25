@@ -1,9 +1,6 @@
 import React, { useState, useEffect, FormEvent } from 'react';
-import { useQuery  } from '@apollo/client';
 import { createUseStyles } from 'react-jss';
 
-import { GET_ALLHOMEWORLDS_QUERY } from '../../graphql';
-import QueryResultRenderer from '../query-result-renderer';
 import { CustomThemeI } from '../../@types';
 
 const useStyles = createUseStyles((theme: CustomThemeI) => ({
@@ -49,49 +46,54 @@ const Form = (props: any) => {
   const s = useStyles();
   const [errorMessage, setErrorMessage] = useState('');
 
-  let name: HTMLInputElement;
-  let height: HTMLInputElement;
-  let mass: HTMLInputElement;
-  let gender: HTMLSelectElement;
-  let homeworld: HTMLSelectElement;
+  const [values, setValues] = useState({
+    name: '',
+    height: '',
+    mass: '',
+    gender: '',
+    homeworld: '',
+  });
 
-  const { loading, error, data } = useQuery(GET_ALLHOMEWORLDS_QUERY);
+  const { homeworlds } = props;
 
   useEffect(() => {
     const { person } = props;
-    if(person && name) {
-      name.value = person.name
-      height.value = person.height
-      mass.value = person.mass
-      gender.value = person.gender
-      homeworld.value = person.homeworld.id
-    }
+    if (person) setValues({...person, homeworld: person.homeworld.id})
   }, [props.person])
+
+  const handleInputChange = (event: any) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value
+    })
+  }
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
 
-    if(!name.value || !height.value || !mass.value || !gender.value || !homeworld.value) {
+    const { name, height, mass, gender, homeworld } = values;
+    if(!name || !height || !mass || !gender || !homeworld) {
       setErrorMessage('All fields are required!')
       return;
     }
 
+    const RADIX = 10;
     try {
       props.person ? (
           await props.updatePerson({
-          name: name.value,
-          height: parseInt(height.value, 10),
-          mass: parseInt(mass.value, 10),
-          gender: gender.value,
-          homeworldId: parseInt(homeworld.value, 10)
+          name,
+          height: parseInt(height, RADIX),
+          mass: parseInt(mass, RADIX),
+          gender,
+          homeworldId: parseInt(homeworld, RADIX)
         })
       ) : (
         await props.createPerson({
-          name: name.value,
-          height: parseInt(height.value, 10),
-          mass: parseInt(mass.value, 10),
-          gender: gender.value,
-          homeworldId: parseInt(homeworld.value, 10)
+          name,
+          height: parseInt(height, RADIX),
+          mass: parseInt(mass, RADIX),
+          gender,
+          homeworldId: parseInt(homeworld, RADIX)
         })
       )
       
@@ -102,40 +104,40 @@ const Form = (props: any) => {
   }
 
   return (
-    <QueryResultRenderer error={error} loading={loading} data={data}>
-      <form onSubmit={e => submitHandler(e)}>
-        <div className={s.inputItem}>
-          <label className={s.label}>Name</label>
-          <input className={s.input} type="text" name="name" ref={node => name = node as HTMLInputElement}/>
-        </div>
-        <div className={s.inputItem}>
-          <label className={s.label}>Height</label>
-          <input className={s.input} type="number" min="1" name="height" ref={node => height = node as HTMLInputElement}/>
-        </div>
-        <div className={s.inputItem}>
-          <label className={s.label}>Mass</label>
-          <input className={s.input} type="number" min="1" name="mass" ref={node => mass = node as HTMLInputElement}/>
-        </div>
-        <div className={s.inputItem}>
-          <label className={s.label}>Gender</label>
-          <select className={s.input} id="gender" name="gender" ref={node => gender = node as HTMLSelectElement}>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="alien">Alien</option>
-          </select>
-        </div>
-        <div className={s.inputItem}>
-          <label className={s.label}>Homeworld</label>
-          <select className={s.input} id="homeworld" name="homeworld" ref={node => homeworld = node as HTMLSelectElement}>
-            {data?.getAllHomeworlds.map((homeworld: any) => <option key={homeworld.id} value={homeworld.id}>{homeworld.name}</option>)}
-          </select>
-        </div>
-        <div className={s.errorText}>{errorMessage && <small>{errorMessage}</small>}</div>
-        <div className={s.btnContainer}>
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </QueryResultRenderer>
+    <form onSubmit={e => submitHandler(e)}>
+      <div className={s.inputItem}>
+        <label className={s.label}>Name</label>
+        <input className={s.input} type="text" name="name" value={values.name} onChange={handleInputChange}/>
+      </div>
+      <div className={s.inputItem}>
+        <label className={s.label}>Height</label>
+        <input className={s.input} type="number" min="1" name="height" value={values.height} onChange={handleInputChange}/>
+      </div>
+      <div className={s.inputItem}>
+        <label className={s.label}>Mass</label>
+        <input className={s.input} type="number" min="1" name="mass" value={values.mass} onChange={handleInputChange}/>
+      </div>
+      <div className={s.inputItem}>
+        <label className={s.label}>Gender</label>
+        <select className={s.input} id="gender" name="gender" value={values.gender} onChange={handleInputChange}>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="alien">Alien</option>
+        </select>
+      </div>
+      <div className={s.inputItem}>
+        <label className={s.label}>Homeworld</label>
+        <select className={s.input} id="homeworld" name="homeworld" value={values.homeworld} onChange={handleInputChange}>
+          <option value="">Select</option>
+          {homeworlds?.getAllHomeworlds.map((homeworld: any) => <option key={homeworld.id} value={homeworld.id}>{homeworld.name}</option>)}
+        </select>
+      </div>
+      <div className={s.errorText}>{errorMessage && <small>{errorMessage}</small>}</div>
+      <div className={s.btnContainer}>
+        <input type="submit" value="Submit" />
+      </div>
+    </form>
   )
 }
 

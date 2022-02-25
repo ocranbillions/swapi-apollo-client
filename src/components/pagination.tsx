@@ -38,7 +38,7 @@ const Pagination = (props: PaginationI) => {
   const { pageInfo } = props;
   const { totalPeople, nextPage, previousPage, pageNumber } = pageInfo;
 
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 6;
   const currentPageNumber = pageNumber ? pageNumber : 1;
   const totalNumOfPages = Math.ceil(parseInt(totalPeople) / ITEMS_PER_PAGE);
 

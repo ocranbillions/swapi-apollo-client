@@ -9,7 +9,7 @@ import Button from '../components/button';
 import QueryResultRenderer from '../components/query-result-renderer';
 
 import useQueryParams from '../hooks/use-query-params';
-import { GET_PEOPLE_QUERY, CREATE_PERSON_MUTATION } from '../graphql';
+import { GET_PEOPLE_QUERY, CREATE_PERSON_MUTATION, GET_ALLHOMEWORLDS_QUERY } from '../graphql';
 import client from '../apollo/client'
 
 const PeoplePage = () => {
@@ -24,10 +24,12 @@ const PeoplePage = () => {
 
   const navigate = useNavigate();
   const [createPersonMutation] = useMutation(CREATE_PERSON_MUTATION);
+
+  const { data: homeworlds } = useQuery(GET_ALLHOMEWORLDS_QUERY);
   
   const createPerson = async(values: any) => {
     const { totalPeople } = data?.getPeople.page
-    const ITEMS_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 6;
     const ADDITIONAL_ITEM = 1;
     const lastPageNumber = Math.ceil(parseInt(totalPeople + ADDITIONAL_ITEM) / ITEMS_PER_PAGE);
 
@@ -43,8 +45,14 @@ const PeoplePage = () => {
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
         <>
-          <Button onClick={() => setShow(true)} btnText="Add character"/>
-          <Modal title="Add new character" onClose={() => setShow(false)} show={show} createPerson={createPerson}/>
+          <Button onClick={() => setShow(true)} btnText="add character"/>
+          <Modal 
+            title="Add new character" 
+            onClose={() => setShow(false)} 
+            show={show} 
+            createPerson={createPerson} 
+            homeworlds={homeworlds}
+          />
           <PeopleList people={data?.getPeople.data} pageInfo={{...data?.getPeople.page, pageNumber}} />
         </>
       </QueryResultRenderer>

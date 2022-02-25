@@ -26,6 +26,7 @@ const Modal = (props: any) => {
               person={props.person} 
               createPerson={props.createPerson}
               updatePerson={props.updatePerson}
+              homeworlds={props.homeworlds}
             />
           </div>
         </div>
