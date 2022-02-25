@@ -2,23 +2,28 @@ import React, { useState, useEffect, FormEvent } from 'react';
 import { useQuery  } from '@apollo/client';
 import { createUseStyles } from 'react-jss';
 
-import { GET_ALLHOMEWORLDS_QUERY } from '../graphql';
-import QueryResultRenderer from './query-result-renderer';
+import { GET_ALLHOMEWORLDS_QUERY } from '../../graphql';
+import QueryResultRenderer from '../query-result-renderer';
+import { CustomThemeI } from '../../@types';
 
-const useStyles = createUseStyles(() => ({
-  row: {
+const useStyles = createUseStyles((theme: CustomThemeI) => ({
+  inputItem: {
     display: 'flex',
-    justifyContent: 'space-around',
-    marginBottom: 15,
-    height: 30,
-    alignItems: 'center'
+    flexDirection: 'column',
+    marginBottom: 8,
   },
   label: {
-    flex: 1,
+    fontSize: 10,
+    marginBottom: 3,
   },
   input: {
-    flex: 1,
-    height: '100%',
+    borderRadius: 5,
+    color: theme.colors.white,
+    border: 0,
+    height: 23,
+    paddingLeft: 5,
+    fontSize: 12,
+    background: theme.colors.lightBlack
   },
   errorText: {
     display: 'flex',
@@ -26,11 +31,16 @@ const useStyles = createUseStyles(() => ({
     height: 20,
     color: 'red'
   },
-  submitBtn: {
+  btnContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
     '& input[type="submit"]': {
       width: 100,
+      background: theme.colors.darkBlack,
+      color: theme.colors.white,
+      border: 0,
+      padding: '5px 10px',
+      borderRadius: 5,
     }
   }
 }));
@@ -94,19 +104,19 @@ const Form = (props: any) => {
   return (
     <QueryResultRenderer error={error} loading={loading} data={data}>
       <form onSubmit={e => submitHandler(e)}>
-        <div className={s.row}>
+        <div className={s.inputItem}>
           <label className={s.label}>Name</label>
-          <input className={s.input} type="text" name="name" ref={node => name = node as HTMLInputElement}/><br/>
+          <input className={s.input} type="text" name="name" ref={node => name = node as HTMLInputElement}/>
         </div>
-        <div className={s.row}>
+        <div className={s.inputItem}>
           <label className={s.label}>Height</label>
           <input className={s.input} type="number" min="1" name="height" ref={node => height = node as HTMLInputElement}/>
         </div>
-        <div className={s.row}>
+        <div className={s.inputItem}>
           <label className={s.label}>Mass</label>
           <input className={s.input} type="number" min="1" name="mass" ref={node => mass = node as HTMLInputElement}/>
         </div>
-        <div className={s.row}>
+        <div className={s.inputItem}>
           <label className={s.label}>Gender</label>
           <select className={s.input} id="gender" name="gender" ref={node => gender = node as HTMLSelectElement}>
             <option value="male">Male</option>
@@ -114,14 +124,14 @@ const Form = (props: any) => {
             <option value="alien">Alien</option>
           </select>
         </div>
-        <div className={s.row}>
+        <div className={s.inputItem}>
           <label className={s.label}>Homeworld</label>
           <select className={s.input} id="homeworld" name="homeworld" ref={node => homeworld = node as HTMLSelectElement}>
             {data?.getAllHomeworlds.map((homeworld: any) => <option key={homeworld.id} value={homeworld.id}>{homeworld.name}</option>)}
           </select>
         </div>
         <div className={s.errorText}>{errorMessage && <small>{errorMessage}</small>}</div>
-        <div className={s.submitBtn}>
+        <div className={s.btnContainer}>
           <input type="submit" value="Submit" />
         </div>
       </form>

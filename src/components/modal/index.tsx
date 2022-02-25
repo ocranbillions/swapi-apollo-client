@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-import Form from '../form'
+import Form from './form'
 import "./style.css";
 
 const Modal = (props: any) => {
@@ -17,7 +17,7 @@ const Modal = (props: any) => {
           <div className="modal-header">
             <h4 className="modal-title">{props.title}</h4>
             <button onClick={props.onClose} className="button">
-              Close
+              X
             </button>
           </div>
           <div className="modal-body">
