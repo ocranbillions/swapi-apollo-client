@@ -95,14 +95,13 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
   const navigate = useNavigate();
   const [deletePersonMutation] = useMutation(DELETE_PERSON_MUTATION);
 
+  const result = client.readQuery({query: GET_PEOPLE_QUERY, variables: { page: pageNumber }})
+  const isLastItemOnPage = result?.getPeople?.data.length === 1;
+  const shouldNavgateToHomePage = isPersonPage || isLastItemOnPage;
+
   const deletePerson = async() => {
     await deletePersonMutation({ variables: { 
-      name: person.name },
-      refetchQueries: () => [{
-        query: GET_PEOPLE_QUERY,
-        variables: { page: pageNumber },
-        fetchPolicy: 'no-cache'
-      }],
+      name: person.name }
     });
   }
 
@@ -110,8 +109,8 @@ const PersonCard = (props: { person: PersonI, isPersonPage: boolean }) => {
     e.preventDefault();
     await deletePerson();
 
-    client.cache.reset()
-    isPersonPage && navigate('/')
+    client.cache.reset();
+    shouldNavgateToHomePage && navigate('/');
   }
 
   return (

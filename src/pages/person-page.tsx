@@ -28,11 +28,7 @@ const PersonPage = () => {
   const updatePerson = async(values: any) => {
     await updatePersonMutation({ variables: { 
       name: personName,
-      personData: { ...values }},
-      refetchQueries: () => [{
-        query: GET_PERSON_QUERY,
-        variables: { name: values.name }
-      }],
+      personData: { ...values }}
     });
   }
 

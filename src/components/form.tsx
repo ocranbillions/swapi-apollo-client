@@ -49,7 +49,7 @@ const Form = (props: any) => {
 
   useEffect(() => {
     const { person } = props;
-    if(person) {
+    if(person && name) {
       name.value = person.name
       height.value = person.height
       mass.value = person.mass

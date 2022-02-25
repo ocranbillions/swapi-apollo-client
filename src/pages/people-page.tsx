@@ -28,15 +28,11 @@ const PeoplePage = () => {
   const createPerson = async(values: any) => {
     const { totalPeople } = data?.getPeople.page
     const ITEMS_PER_PAGE = 10;
-    const lastPageNumber = Math.ceil(parseInt(totalPeople + 1) / ITEMS_PER_PAGE);
+    const ADDITIONAL_ITEM = 1;
+    const lastPageNumber = Math.ceil(parseInt(totalPeople + ADDITIONAL_ITEM) / ITEMS_PER_PAGE);
 
     await createPersonMutation({ variables: { 
-      personData: { ...values }},
-      refetchQueries: () => [{
-        query: GET_PEOPLE_QUERY,
-        variables: { page: lastPageNumber.toString() },
-        fetchPolicy: 'no-cache'
-      }],
+      personData: { ...values }}
     });
 
     client.cache.reset()
@@ -47,8 +43,8 @@ const PeoplePage = () => {
     <Layout>
       <QueryResultRenderer error={error} loading={loading} data={data}>
         <>
-          <Button onClick={() => setShow(true)} btnText="Add Person"/>
-          <Modal title="Add new person" onClose={() => setShow(false)} show={show} createPerson={createPerson}/>
+          <Button onClick={() => setShow(true)} btnText="Add character"/>
+          <Modal title="Add new character" onClose={() => setShow(false)} show={show} createPerson={createPerson}/>
           <PeopleList people={data?.getPeople.data} pageInfo={{...data?.getPeople.page, pageNumber}} />
         </>
       </QueryResultRenderer>
