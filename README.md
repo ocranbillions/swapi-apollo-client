@@ -1,4 +1,6 @@
 # swapi-apollo-client
+Live @ https://swapi-apollo-client.herokuapp.com/
+
 A full-stack Graphql app for displaying info about the Star Wars characters. Built with apollo-client and apollo-server
 
 ### Getting started
